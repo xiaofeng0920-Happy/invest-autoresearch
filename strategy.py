@@ -38,7 +38,7 @@ class StrategyConfig:
     take_profit: float = 40.0       # 止盈线%
     
     # === 调仓频率 ===
-    rebalance_days: int = 5         # 调仓间隔（交易日）
+    rebalance_days: int = 3         # 调仓间隔（实验 4: 更频繁）
     
     # === 行业配置 ===
     sector_weights: Dict[str, float] = None
