@@ -1,0 +1,10 @@
+commit	val_bpb	memory_gb	status	description
+b0b64ff	2.6948	0.0	keep	baseline_v2 (ROE>10%, 毛利>20%, 负债<50%, 8 只)
+ba93cb1	2.0375	0.0	discard	exp1: ROE>15%（夏普下降）
+4bef905	2.6948	0.0	keep	exp2: 负债<50%（持平）
+b46b1d1	2.6948	0.0	discard	exp3: 毛利>30%（选中 0 只）
+671ff27	2.6948	0.0	keep	exp4: 调仓 3 天
+69edb05	-0.3077	0.0	discard	exp5: 营收增长>0%（夏普暴跌）
+8275d3e	2.1760	0.0	discard	exp6: ROE 加权（夏普下降）
+bea158e	2.5984	0.0	discard	exp7: 单只 6%（夏普略降）
+cbe6cd1	2.8532	0.0	keep	exp10: ROE>8%, 负债<66%（夏普 2.85，9 只，新最佳！）
