@@ -78,11 +78,16 @@ def generate_signals(stock_data: List[Dict]) -> List[str]:
     signals = []
     
     for stock in stock_data:
-        # 巴菲特标准筛选
-        if (stock.get('roe', 0) >= CONFIG.min_roe and
-            stock.get('gross_margin', 0) >= CONFIG.min_gross_margin and
-            stock.get('debt_ratio', 100) <= CONFIG.max_debt_ratio and
-            stock.get('revenue_growth', -100) >= CONFIG.min_revenue_growth):
+        # 巴菲特标准筛选（支持中英文字段名）
+        roe = stock.get('roe', stock.get('ROE', 0))
+        gross_margin = stock.get('gross_margin', stock.get('毛利率', 0))
+        debt_ratio = stock.get('debt_ratio', stock.get('资产负债率', 100))
+        revenue_growth = stock.get('revenue_growth', stock.get('营收增长率', -100))
+        
+        if (roe >= CONFIG.min_roe and
+            gross_margin >= CONFIG.min_gross_margin and
+            debt_ratio <= CONFIG.max_debt_ratio and
+            revenue_growth >= CONFIG.min_revenue_growth):
             signals.append(stock['code'])
     
     return signals
