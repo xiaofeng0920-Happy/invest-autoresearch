@@ -23,8 +23,8 @@ class StrategyConfig:
     """策略配置 - AI 可修改"""
     
     # === 选股条件 ===
-    min_roe: float = 7.0            # 最小 ROE% (实验 12: 进一步降低到 7%)
-    min_gross_margin: float = 20.0  # 最小毛利率%
+    min_roe: float = 7.0            # 最小 ROE%
+    # min_gross_margin: float = 20.0  # 最小毛利率% (实验 13: 去掉)
     max_debt_ratio: float = 66.0    # 最大负债率%
     min_revenue_growth: float = -10.0  # 最小营收增长率%
     
@@ -78,14 +78,12 @@ def generate_signals(stock_data: List[Dict]) -> List[str]:
     signals = []
     
     for stock in stock_data:
-        # 巴菲特标准筛选（支持中英文字段名）
+        # 实验 13: 去掉毛利率因子
         roe = stock.get('roe', stock.get('ROE', 0))
-        gross_margin = stock.get('gross_margin', stock.get('毛利率', 0))
         debt_ratio = stock.get('debt_ratio', stock.get('资产负债率', 100))
         revenue_growth = stock.get('revenue_growth', stock.get('营收增长率', -100))
         
         if (roe >= CONFIG.min_roe and
-            gross_margin >= CONFIG.min_gross_margin and
             debt_ratio <= CONFIG.max_debt_ratio and
             revenue_growth >= CONFIG.min_revenue_growth):
             signals.append(stock['code'])
