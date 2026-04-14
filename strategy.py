@@ -25,7 +25,7 @@ class StrategyConfig:
     # === 选股条件 ===
     min_roe: float = 10.0           # 最小 ROE%
     min_gross_margin: float = 20.0  # 最小毛利率%
-    max_debt_ratio: float = 60.0    # 最大负债率%
+    max_debt_ratio: float = 50.0    # 最大负债率% (实验：更稳健)
     min_revenue_growth: float = -20.0  # 最小营收增长率%
     
     # === 仓位配置 ===
