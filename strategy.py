@@ -23,9 +23,9 @@ class StrategyConfig:
     """策略配置 - AI 可修改"""
     
     # === 选股条件 ===
-    min_roe: float = 10.0           # 最小 ROE%
+    min_roe: float = 8.0            # 最小 ROE% (实验 10: 降低到 8%)
     min_gross_margin: float = 20.0  # 最小毛利率%
-    max_debt_ratio: float = 50.0    # 最大负债率% (实验：更稳健)
+    max_debt_ratio: float = 66.0    # 最大负债率% (实验 10: 放宽到 66%)
     min_revenue_growth: float = -20.0  # 最小营收增长率%
     
     # === 仓位配置 ===
