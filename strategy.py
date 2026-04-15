@@ -25,7 +25,7 @@ class StrategyConfig:
     # === 选股条件 ===
     min_roe: float = 7.0            # 最小 ROE%
     # min_gross_margin: float = 20.0  # 最小毛利率% (去掉)
-    max_debt_ratio: float = 90.0    # 最大负债率% (实验 14: 放宽到 90%，纳入银行股)
+    max_debt_ratio: float = 90.0    # 最大负债率%
     min_revenue_growth: float = -10.0  # 最小营收增长率%
     
     # === 仓位配置 ===
@@ -78,7 +78,7 @@ def generate_signals(stock_data: List[Dict]) -> List[str]:
     signals = []
     
     for stock in stock_data:
-        # 实验 13: 去掉毛利率因子
+        # 实验 18: 提高 ROE 阈值
         roe = stock.get('roe', stock.get('ROE', 0))
         debt_ratio = stock.get('debt_ratio', stock.get('资产负债率', 100))
         revenue_growth = stock.get('revenue_growth', stock.get('营收增长率', -100))
