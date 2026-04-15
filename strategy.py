@@ -23,10 +23,12 @@ class StrategyConfig:
     """策略配置 - AI 可修改"""
     
     # === 选股条件 ===
-    min_roe: float = 7.0            # 最小 ROE%
+    min_roe: float = 15.0           # 最小 ROE% (V2: 从 7% 提高)
     # min_gross_margin: float = 20.0  # 最小毛利率% (去掉)
-    max_debt_ratio: float = 90.0    # 最大负债率%
+    max_debt_ratio: float = 60.0    # 最大负债率% (V2: 从 90% 降低)
     min_revenue_growth: float = -10.0  # 最小营收增长率%
+    min_fcf: float = 0.0            # 最小自由现金流（亿）V2 新增
+    min_roe_stability: float = 15.0  # 5 年平均 ROE% V2 新增
     
     # === 仓位配置 ===
     max_single_weight: float = 8.0  # 单只股票最大权重%
@@ -78,14 +80,18 @@ def generate_signals(stock_data: List[Dict]) -> List[str]:
     signals = []
     
     for stock in stock_data:
-        # 实验 18: 提高 ROE 阈值
+        # V2 策略：多因子筛选
         roe = stock.get('roe', stock.get('ROE', 0))
         debt_ratio = stock.get('debt_ratio', stock.get('资产负债率', 100))
         revenue_growth = stock.get('revenue_growth', stock.get('营收增长率', -100))
+        fcf = stock.get('fcf', stock.get('自由现金流', 0))
+        avg_roe_5y = stock.get('avg_roe_5y', roe)  # 5 年平均 ROE
         
         if (roe >= CONFIG.min_roe and
             debt_ratio <= CONFIG.max_debt_ratio and
-            revenue_growth >= CONFIG.min_revenue_growth):
+            revenue_growth >= CONFIG.min_revenue_growth and
+            fcf >= CONFIG.min_fcf and
+            avg_roe_5y >= CONFIG.min_roe_stability):
             signals.append(stock['code'])
     
     return signals
